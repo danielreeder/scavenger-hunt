@@ -1,5 +1,10 @@
+const circle = document.querySelector(".circle");
+let growInterval; 
+let resetTimeout; 
+let size = 50; 
+const maxSize = 100;
+
 document.addEventListener('mousemove', (ev) => {
-    const circle = document.querySelector(".circle");
     // const square_int = Math.floor(Math.random() * 1000);
     // circle.style.borderRadius = 50 + '%'
     // circle.style.height = 35 + 'px'
@@ -10,13 +15,41 @@ document.addEventListener('mousemove', (ev) => {
     //     circle.style.width = 100 + 'vh';
     // }
 
-    circle.style.left = ev.pageX - 25 + 'px';
-    circle.style.top = ev.pageY - 25 + 'px';
-    circle.style.borderRadius = (ev.pageX % 50) + (ev.pageY % 50) + '%';
-    if (Math.floor(Math.random() * 100) === 69) {
-        circle.style.height = circle.clientHeight + 1 + "px";
-        circle.style.width = circle.clientWidth + 1 + "px";
+    circle.style.left = ev.pageX - (circle.clientHeight / 2) + 'px';
+    circle.style.top = ev.pageY - (circle.clientWidth / 2) + 'px';
+    // circle.style.borderRadius = (ev.pageX % 50) + (ev.pageY % 50) + '%';
+    // if (Math.floor(Math.random() * 10000) === 69) {
+    //     circle.style.height = circle.clientHeight + 1 + "px";
+    //     circle.style.width = circle.clientWidth + 1 + "px";
+    // }
+    clearInterval(growInterval);
+    clearTimeout(resetTimeout);
+
+    if (size < maxSize) {
+        growInterval = setInterval(() => {
+            if (size < maxSize) {
+                size += 0.075;
+                circle.style.height = size + "px";
+                circle.style.width = size + "px";
+            } else {
+                clearInterval(growInterval);
+            }
+        }, 10);
     }
+
+    resetTimeout = setTimeout(() => {
+        clearInterval(growInterval);
+        const shrinkInterval = setInterval(() => {
+            if (size > 50) {
+                size -= 1;
+                circle.style.height = size + "px";
+                circle.style.width = size + "px";
+            } else {
+                clearInterval(shrinkInterval);
+            }
+        }, 10);
+    }, 500);
+
 })
 
 let generate_button = document.querySelector(".generator-button")
@@ -48,8 +81,8 @@ generate_button.addEventListener('click', (ev) => {
         container.appendChild(dead);
         generate_input.value = '';
         circle = document.querySelector(".circle");
-        circle.style.height = "30px";
-        circle.style.width = "30px";
+        maxSize *= 0.75;
+        size *= 0.75;
     }
 
     if (generate_input.value === "thirteen dozen bananas" && placed === 1) {
