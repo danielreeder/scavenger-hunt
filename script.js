@@ -18,7 +18,6 @@ document.addEventListener('mousemove', (ev) => {
 let generate_button = document.querySelector(".generator-button")
 let generate_input = document.querySelector(".generator-input")
 let container = document.querySelector(".container")
-let text = document.querySelectorAll(".text")
 let keys = []
 let clicked
 
@@ -214,6 +213,7 @@ dock_box.forEach(box => {
             // generate_input.remove();
         }
         else {
+            let text = document.querySelectorAll(".text")
             container.style.backgroundImage = `radial-gradient(circle, ${gradient_list.slice(0, gradient_list.length-placed)})`
             text.forEach(text_box => {
                 text_box.style.backgroundImage = `radial-gradient(circle, ${gradient_list.slice(0, gradient_list.length-placed)})`
