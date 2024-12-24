@@ -13,6 +13,10 @@ document.addEventListener('mousemove', (ev) => {
     circle.style.left = ev.pageX - 25 + 'px';
     circle.style.top = ev.pageY - 25 + 'px';
     circle.style.borderRadius = (ev.pageX % 50) + (ev.pageY % 50) + '%';
+    if (Math.floor(Math.random() * 100) === 69) {
+        circle.style.height = circle.clientHeight + 1 + "px";
+        circle.style.width = circle.clientWidth + 1 + "px";
+    }
 })
 
 let generate_button = document.querySelector(".generator-button")
