@@ -67,7 +67,37 @@ function generate_key(src) {
     container.appendChild(new_key);
 }
 
+let num_defeated = 0
+function generate_monster_attack(num) {
+    defeated = false;
+    for (int i = 0; i < 10; i++) { 
+        let monster = document.createElement("img");
+        monster.classList.add("scatter");
+        monster.id = "monster"
+        monster.src = "images/swamp-monster.jpg";
+        container.appendChild(monster);
+    
+        let monster_hp = Math.floor(Math.random() * 30);
+        let clicked_count = 0
+        monster.addEventListener('click', () => {
+            clicked_count += 1;
+            if (clicked_count === monster_hp){
+                monster.remove();
+                header.innerHTML = "Swamp Monster Defeated!";
+                num_defeated += 1
+            }
+            if (num_defeated === 10 && size < 100) {
+                size += 10;
+                maxSize += 10;
+            }
+        })
+    }
+    scatter()
+}
 generate_button.addEventListener('click', (ev) => {
+    if (generate_input.value === "swamp monster attack") {
+        generate_monster_attack()
+    }
     if (generate_input.value === "outsmarted the wolves" && placed === 0) {
         generate_key("images/istockphoto-91895082-612x612.jpg");
         generate_input.value = '';
