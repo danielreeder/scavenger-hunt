@@ -68,7 +68,7 @@ function generate_key(src) {
 }
 
 let num_defeated = 0
-function generate_monster_attack(num) {
+function generate_monster_attack() {
     defeated = false;
     for (int i = 0; i < 10; i++) { 
         let monster = document.createElement("img");
