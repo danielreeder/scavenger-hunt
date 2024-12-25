@@ -2,7 +2,8 @@ const circle = document.querySelector(".circle");
 let growInterval; 
 let resetTimeout; 
 let size = 50; 
-const maxSize = 100;
+let base_size = 50;
+let maxSize = 100;
 
 document.addEventListener('mousemove', (ev) => {
     // const square_int = Math.floor(Math.random() * 1000);
@@ -40,7 +41,7 @@ document.addEventListener('mousemove', (ev) => {
     resetTimeout = setTimeout(() => {
         clearInterval(growInterval);
         const shrinkInterval = setInterval(() => {
-            if (size > 50) {
+            if (size > base_size) {
                 size -= 1;
                 circle.style.height = size + "px";
                 circle.style.width = size + "px";
@@ -69,34 +70,36 @@ function generate_key(src) {
 
 let num_defeated = 0
 function generate_monster_attack() {
-    defeated = false;
-    for (int i = 0; i < 10; i++) { 
-        let monster = document.createElement("img");
-        monster.classList.add("scatter");
-        monster.id = "monster"
-        monster.src = "images/swamp-monster.jpg";
-        container.appendChild(monster);
-    
-        let monster_hp = Math.floor(Math.random() * 30);
-        let clicked_count = 0
-        monster.addEventListener('click', () => {
-            clicked_count += 1;
-            if (clicked_count === monster_hp){
-                monster.remove();
-                header.innerHTML = "Swamp Monster Defeated!";
-                num_defeated += 1
-            }
-            if (num_defeated === 10 && size < 100) {
-                size += 10;
-                maxSize += 10;
-            }
-        })
-    }
+    let monster = document.createElement("img");
+    monster.classList.add("scatter");
+    monster.id = "monster"
+    monster.src = "images/swamp-monster.jpg";
+    container.appendChild(monster);
     scatter()
+    let monster_hp = Math.floor(Math.random() * 30);
+    let clicked_count = 0
+    monster.addEventListener('click', () => {
+        clicked_count += 1;
+        if (clicked_count === monster_hp){
+            monster.remove();
+            defeated = true;
+            size += 1;
+            base_size += 1;
+            maxSize += 1;
+            console.log(size, maxSize);
+            circle.style.height = size + 'px';
+            circle.style.width = size + 'px';
+        }
+    })
 }
 generate_button.addEventListener('click', (ev) => {
     if (generate_input.value === "swamp monster attack") {
         generate_monster_attack()
+        generate_monster_attack()
+        generate_monster_attack()
+        generate_monster_attack()
+        generate_monster_attack()
+        generate_input.value = '';
     }
     if (generate_input.value === "outsmarted the wolves" && placed === 0) {
         generate_key("images/istockphoto-91895082-612x612.jpg");
@@ -299,8 +302,8 @@ function scatter() {
     let scatters = document.querySelectorAll(".scatter")
     scatters.forEach(scatter => {
         console.log(scatter.id);
-        scatter.style.top = Math.max(0, Math.floor(Math.random() * window.innerHeight) - scatter.style.height) + 'px'
-        scatter.style.left = Math.max(0, Math.floor(Math.random() * window.innerWidth) - scatter.style.width) + 'px'
+        scatter.style.top = Math.max(0, Math.floor(Math.random() * window.innerHeight) - scatter.clientHeight) + 'px'
+        scatter.style.left = Math.max(0, Math.floor(Math.random() * window.innerWidth) - scatter.clientWidth) + 'px'
         console.log(scatter.style.left)
     })
 }
