@@ -76,7 +76,7 @@ function generate_monster_attack() {
     monster.src = "images/swamp-monster.jpg";
     container.appendChild(monster);
     scatter()
-    let monster_hp = Math.floor(Math.random() * 30);
+    let monster_hp = Math.floor(Math.random() * 5);
     let clicked_count = 0
     monster.addEventListener('click', () => {
         clicked_count += 1;
